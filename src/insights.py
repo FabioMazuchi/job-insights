@@ -100,14 +100,3 @@ def filter_by_salary_range(jobs, salary):
             if matches_salary_range(job, salary):
                 result.append(job)
     return result
-
-
-jobs = [
-    {"max_salary": 0, "min_salary": 10},
-    {"max_salary": 10, "min_salary": 100},
-    {"max_salary": 10000, "min_salary": 200},
-    {"max_salary": 15000, "min_salary": 0},
-    {"max_salary": 1500, "min_salary": 0},
-    {"max_salary": -1, "min_salary": 10},
-]
-print(filter_by_salary_range(jobs, 0))
