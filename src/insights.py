@@ -2,62 +2,45 @@ from src.jobs import read
 
 
 def get_unique_job_types(path):
-    lista = read(path)
-    result = {}
-    for item in lista:
-        job = item["job_type"]
-        if job not in result:
-            result[job] = {"jobs": 0}
-        result[job]["jobs"] += 1
-    return result
+    result = read(path)
+    return list(set([row["job_type"] for row in result]))
 
 
 def filter_by_job_type(jobs, job_type):
-    result = []
-    for row in jobs:
-        if row["job_type"] == job_type:
-            result.append(row)
-    return result
+    return [job for job in jobs if job["job_type"] == job_type]
 
 
 def get_unique_industries(path):
-    lista = read(path)
-    result = {}
-    for item in lista:
-        industry = item["industry"]
-        if industry != "":
-            if industry not in result and industry:
-                result[industry] = {"jobs": 0}
-            result[industry]["jobs"] += 1
-    return result
+    result = read(path)
+    return list(
+        set([row["industry"] for row in result if row["industry"] != ""])
+    )
 
 
 def filter_by_industry(jobs, industry):
-    result = []
-    for row in jobs:
-        if row["industry"] == industry:
-            result.append(row)
-    return result
+    return [job for job in jobs if job["industry"] == industry]
 
 
 def get_max_salary(path):
-    lista = read(path)
-    result = []
-    for item in lista:
-        max_salary = item["max_salary"]
-        if max_salary.isdigit():
-            result.append(int(max_salary))
-    return max(result)
+    result = read(path)
+    return max(
+        [
+            int(item["max_salary"])
+            for item in result
+            if item["max_salary"].isdigit()
+        ]
+    )
 
 
 def get_min_salary(path):
-    lista = read(path)
-    result = []
-    for item in lista:
-        min_salary = item["min_salary"]
-        if min_salary.isdigit():
-            result.append(int(min_salary))
-    return min(result)
+    result = read(path)
+    return min(
+        [
+            int(item["min_salary"])
+            for item in result
+            if item["min_salary"].isdigit()
+        ]
+    )
 
 
 def validate(job, salary):
